@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+// all in js 在react中css和js可以通过模块的形式嵌入到react中
+// import './index.css';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+// PWA progressive web application
+// https协议的服务器上
+// import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+// serviceWorker.unregister();
