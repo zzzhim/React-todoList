@@ -1,10 +1,17 @@
 import React, { Component } from "react"
+// 不会阻止程序的运行，只会做出相应的提示
+import PropTypes from 'prop-types'
 
 class TodoItem extends Component {
     constructor(props) {
         super(props)
 
         this.onDel = this.onDel.bind(this)
+    }
+
+    // 对props下的属性设置默认值
+    static defaultProps = {
+        text: 111
     }
 
     onDel() {
@@ -15,9 +22,30 @@ class TodoItem extends Component {
     render() {
         const { content } = this.props
         return (
-            <li onClick={ this.onDel } dangerouslySetInnerHTML={{ __html: content }}></li>
+            <div>
+                <li
+                    onClick={ this.onDel }
+                    dangerouslySetInnerHTML={{ __html: content }}>
+                </li>
+                {/* { this.props.text } - { this.props.test } */}
+            </div>
         )
     }
+}
+
+// 对Props做校验
+TodoItem.propTypes = {
+    // content必须是字符串 并且必须要传递
+    content: PropTypes.string.isRequired,
+    // onClickDel 可以是函数或者数字
+    onClickDel: PropTypes.oneOfType([ PropTypes.func, PropTypes.number ]),
+    // index必须是数字
+    index: PropTypes.number
+}
+
+// 对props下的属性设置默认值
+TodoItem.defaultProps = {
+    test: '2323'
 }
 
 export default TodoItem
