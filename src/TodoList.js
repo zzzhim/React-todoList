@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
 import TodoItem from './TodoItem'
-import Test from './Test.js'
 import './style.css'
 
 // 定义一个类
@@ -20,6 +19,39 @@ class TodoList extends Component {
         // 使用 ES6 的bind改变this指向
         this.handleInputChange = this.handleInputChange.bind(this)
         this.onClick = this.onClick.bind(this)
+    }
+    // 在组件即将被挂载到页面的时刻自动执行
+    componentWillMount() {
+        console.log('componentWillMount')
+    }
+    // 在组件被挂栽到页面之后自动被执行
+    componentDidMount() {
+        console.log('componentDidMount')
+    }
+    // 组件被更新之前，他会自动执行
+    shouldComponentUpdate() {
+        console.log('shouldComponentUpdate')
+        return true
+    }
+    // 组件被更新之前，他会自动执行,但是他在shouldComponentUpdate之后被执行
+    // 如果shouldComponentUpdate返回true 它才会执行， 如果返回false 它就不会执行
+    componentWillUpdate() {
+        console.log('componentWillUpdate')
+    }
+    // 组件更新完成之后它会被执行
+    componentDidUpdate() {
+        console.log('componentDidUpdate')
+    }
+    // 当一个组件从父组件接受参数
+    // 只要父组件的render函数被重新执行了，子组件的这个生命周期函数就会被执行
+    // 如果这个组件第一次存在于父组件中，不会执行
+    // 如果这个组件之前已经存在于父组件中，才会被执行
+    componentWillReceiveProps() {
+        console.log('child componentWillReceiveProps')
+    }
+    // 当这个组件即将被从页面中剔除的时候，会被执行
+    componentWillUnmount() {
+        console.log('child componentWillUnmount')
     }
 
     handleInputChange(e) {
@@ -72,12 +104,15 @@ class TodoList extends Component {
 
     // 当组件的state和props发生改变的时候，render函数就会重新渲染
     render() {
+        console.log('render')
         // JSX
         return (
             // 占位符
             <Fragment>
                 <div>
                     <input
+                        // react使用ref, 尽量避免使用ref
+                        ref={ (input) => { this.input = input } }
                         // react会认为calss是一个类
                         // 在为元素和组件添加class时应使用className
                         className="input"
@@ -89,7 +124,6 @@ class TodoList extends Component {
                 </div>
                 {/* 循环渲染数据 */}
                 <ul>{ this.onTodoItem() }</ul>
-                <Test content={ this.state.inputValue } />
             </Fragment>
         )
     }
