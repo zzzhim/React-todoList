@@ -27,9 +27,10 @@ class TodoList extends Component {
     // }
     // // 在组件被挂栽到页面之后自动被执行
     componentDidMount() {
-        axios.get('/api/todoList')
+        axios.get('http://yapi.demo.qunar.com/mock/32239/api/todo_list')
             .then(res => {
-                console.log(res)
+                const { data } = res
+                this.setState(() => ({ list: [ ...data ] }))
             })
             .catch(err => {
                 console.log(err)
