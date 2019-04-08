@@ -13,6 +13,14 @@ class TodoItem extends Component {
     static defaultProps = {
         text: 111
     }
+    // 组件被更新之前，他会自动执行
+    shouldComponentUpdate(nextProps, nextState) {
+        if(nextProps.content !== this.props.content) {
+            return true
+        }else {
+            return false
+        }
+    }
 
     onDel() {
         const { onClickDel, index } = this.props
