@@ -2,7 +2,7 @@ import {
     CHANGE_INPUT_VALUE,
     ADD_TODO_ITEM,
     DELETE_TODO_ITEM
-} from './store/actionTypes'
+} from './actionTypes'
 
 const defaultState = {
     inputValue: '',
@@ -15,7 +15,7 @@ export default (state = defaultState, action) => {
 
     if(action.type === CHANGE_INPUT_VALUE) {
         newState.inputValue = action.value
-        
+
         return newState
     }
 
