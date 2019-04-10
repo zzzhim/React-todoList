@@ -1,9 +1,5 @@
-import React, { Component, Fragment } from 'react'
-import {
-    Input,
-    Button,
-    List
-} from 'antd'
+import React, { Component } from 'react'
+
 import 'antd/dist/antd.css'
 
 import store from './store'
@@ -13,6 +9,7 @@ import {
     getDeleteItemAction
 } from './store/actionCreators'
 
+import TodoListUI from './TodoListUi'
 
 class TodoList extends Component {
     constructor(props) {
@@ -22,6 +19,7 @@ class TodoList extends Component {
 
         this.handleInputChange = this.handleInputChange.bind(this)
         this.handleBtnClick = this.handleBtnClick.bind(this)
+        this.handleItemDelete = this.handleItemDelete.bind(this)
 
         this.handleStoreChange = this.handleStoreChange.bind(this)
         store.subscribe(this.handleStoreChange)
@@ -29,30 +27,13 @@ class TodoList extends Component {
 
     render() {
         return (
-            <Fragment>
-                <div style={{ margin: '20px' }}>
-                    <div>
-                        <Input
-                            value={ this.state.inputValue }
-                            placeholder="todo info"
-                            style={{ width: '300px', marginRight: '10px' }}
-                            onChange={ this.handleInputChange }
-                        />
-
-                        <Button type="primary" onClick={ this.handleBtnClick }>提交</Button>
-                    </div>
-                    <List
-                        style={{ marginTop: '10px', width: '300px' }}
-                        bordered
-                        dataSource={ this.state.list }
-                        renderItem={ (item, index) => (
-                            <List.Item onClick={ this.handleItemDelete.bind(this, index) }>
-                                {item}
-                            </List.Item>
-                        )}
-                    />
-                </div>
-            </Fragment>
+            <TodoListUI
+                inputValue = { this.state.inputValue }
+                handleInputChange = { this.handleInputChange }
+                handleBtnClick = { this.handleBtnClick }
+                list = { this.state.list }
+                handleItemDelete={ this.handleItemDelete }
+            />
         )
     }
 
