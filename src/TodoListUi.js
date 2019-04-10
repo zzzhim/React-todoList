@@ -17,15 +17,15 @@ const TodoListUI = (props) => {
                     onChange={ props.handleInputChange }
                 />
 
-                <Button type="primary" onClick={ this.props.handleBtnClick }>提交</Button>
+                <Button type="primary" onClick={ props.handleBtnClick }>提交</Button>
             </div>
             <List
                 style={ { marginTop: '10px', width: '300px' } }
                 bordered
-                dataSource={ this.props.list }
+                dataSource={props.list }
                 renderItem={ (item, index) => (
                     <List.Item onClick={ () => {
-                        this.props.handleItemDelete(index)
+                        props.handleItemDelete(index)
                     } }>
                         { item }
                     </List.Item>
