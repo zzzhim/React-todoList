@@ -7,11 +7,10 @@ import {
     getInputChangeAction,
     getAddItemAction,
     getDeleteItemAction,
-    getInitListAction
+    getTodoList
 } from './store/actionCreators'
 
 import TodoListUI from './TodoListUi'
-import axios from 'axios'
 
 class TodoList extends Component {
     constructor(props) {
@@ -28,16 +27,9 @@ class TodoList extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://yapi.demo.qunar.com/mock/32239/api/todo_list')
-            .then((res) => {
-                const { data } = res
-                const action = getInitListAction(data)
-
-                store.dispatch(action)
-            })
-            .catch(() => {
-
-            })
+        // Redux-thunk中间件实现ajax数据请求
+        const action = getTodoList()
+        store.dispatch(action)
     }
 
     render() {

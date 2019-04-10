@@ -4,6 +4,7 @@ import {
     DELETE_TODO_ITEM,
     INIT_LIST_ACTION
 } from './actionTypes'
+import axios from 'axios'
 
 export const getInputChangeAction = value => ({
     type: CHANGE_INPUT_VALUE,
@@ -23,3 +24,18 @@ export const getInitListAction = data => ({
     type: INIT_LIST_ACTION,
     data
 })
+
+// Redux-thunk中间件实现ajax数据请求
+export const getTodoList = () => {
+    return (dispatch) => {
+        axios.get('http://yapi.demo.qunar.com/mock/32239/api/todo_list')
+            .then((res) => {
+                const { data } = res
+                const action = getInitListAction(data)
+                dispatch(action)
+            })
+            .catch(() => {
+
+            })
+    }
+}
