@@ -8,6 +8,7 @@
     "mockjs": "^1.0.1-beta3",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
+    "react-redux": "^7.0.2",
     "react-scripts": "2.1.1",
     "react-transition-group": "^2.9.0",
     "redux": "^4.0.1",

@@ -2,94 +2,129 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @LastEditors: Please set LastEditors
- * @Date: 2019-04-21 02:21:47
- * @LastEditTime: 2019-04-21 03:53:44
+ * @Date: 2019-04-21 17:51:23
+ * @LastEditTime: 2019-04-21 20:03:02
  */
 
 import React, { Component } from 'react'
+// import store from './store'
+// 通过 connect 获取 store 的数据
+import { connect } from 'react-redux'
 
-import 'antd/dist/antd.css'
+// 无状态组件
+const TodoList = (props) => {
+    const {
+        inputValue,
+        changeInputValue,
+        handleClick,
+        handleDelete,
+        list
+    } = props
 
+    return (
+        <div>
+            <div>
+                <input
+                    value={ inputValue }
+                    onChange={ changeInputValue }
+                    />
+                <button onClick={ handleClick }>提交</button>
+            </div>
+            <div>
+                {
+                    list.map((value, index) => {
+                        return (
+                            <li
+                                onClick={ handleDelete.bind(null, index) }
+                                key={ index }
+                                >
+                                    { value }
+                            </li>
+                        )
+                    })
+                }
+            </div>
+        </div>
+    )
+}
 
-import store from './store'
-import {
-    getInputChangeAction,
-    getAddItemAction,
-    getDeleteItemAction,
-    // getInitListAction,
-    // getTodoList,
-    getInitList
-} from './store/actionCreators'
+// class TodoList extends Component {
+//     constructor(props) {
+//         super(props)
+//     }
 
-import TodoListUI from './TodoListUi'
-// import axios from 'axios'
+//     render() {
+//         const {
+//             inputValue,
+//             changeInputValue,
+//             handleClick,
+//             handleDelete
+//         } = this.props
 
-class TodoList extends Component {
-    constructor(props) {
-        super(props)
+//         return (
+//             <div>
+//                 <div>
+//                     <input
+//                         value={ inputValue }
+//                         onChange={ changeInputValue }
+//                         />
+//                     <button onClick={ handleClick }>提交</button>
+//                 </div>
+//                 <div>
+//                     {
+//                         this.props.list.map((value, index) => {
+//                             return (
+//                                 <li
+//                                     onClick={ handleDelete.bind(null, index) }
+//                                     key={ index }
+//                                     >
+//                                         { value }
+//                                 </li>
+//                             )
+//                         })
+//                     }
+//                 </div>
+//             </div>
+//         )
+//     }
+// }
 
-        this.state = store.getState()
-
-        this.handleInputChange = this.handleInputChange.bind(this)
-        this.handleBtnClick = this.handleBtnClick.bind(this)
-        this.handleItemDelete = this.handleItemDelete.bind(this)
-
-        this.handleStoreChange = this.handleStoreChange.bind(this)
-        store.subscribe(this.handleStoreChange)
-    }
-
-    componentDidMount() {
-        // Redux-thunk中间件实现ajax数据请求
-        // const action = getTodoList()
-
-        // axios.get('/api/todolist')
-        //     .then((res) => {
-        //         const { data } = res.data
-        //         console.log(data)
-        //         const action = getInitListAction(data)
-        //         store.dispatch(action)
-        //     })
-        //     .catch(err => {
-        //         console.log(err)
-        //     })
-        const action = getInitList()
-        console.log(action)
-        store.dispatch(action)
-    }
-
-    render() {
-        return (
-            <TodoListUI
-                inputValue = { this.state.inputValue }
-                handleInputChange = { this.handleInputChange }
-                handleBtnClick = { this.handleBtnClick }
-                list = { this.state.list }
-                handleItemDelete={ this.handleItemDelete }
-            />
-        )
-    }
-
-    handleInputChange(e) {
-        const action = getInputChangeAction(e.target.value)
-
-        store.dispatch(action)
-    }
-
-    handleBtnClick() {
-        const action = getAddItemAction()
-
-        store.dispatch(action)
-    }
-
-    handleItemDelete(index) {
-        const action = getDeleteItemAction(index)
-
-        store.dispatch(action)
-    }
-
-    handleStoreChange() {
-        this.setState(store.getState())
+const mapStateToProps = (state) => {
+    return {
+        inputValue: state.inputValue,
+        list: state.list
     }
 }
 
-export default TodoList
+// store.dispatch, props
+const mapDispatchToProps = (dispatch) => {
+    return {
+        changeInputValue(e) {
+            const value = e.target.value
+            const action = {
+                type: 'cahnge_input_value',
+                value
+            }
+            dispatch(action)
+        },
+        handleClick() {
+            const action = {
+                type: 'add_item'
+            }
+
+            dispatch(action)
+        },
+        handleDelete(index) {
+            const action = {
+                type: 'del_item',
+                value: index
+            }
+
+            dispatch(action)
+        }
+    }
+}
+
+// 让他们两个做连接
+// connect 返回的是一个容器组件
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
