@@ -1,11 +1,16 @@
 import { createStore, applyMiddleware, compose } from 'redux'
-import thunk from 'redux-thunk'
+// import thunk from 'redux-thunk'
+import createSagaMiddleware from 'redux-saga'
 import reducer from './reducer'
+import todoSaga from './sagas'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose
+// 创建 saga 的中间件
+const sagaMiddleware = createSagaMiddleware()
 
 const enhancer = composeEnhancers(
-    applyMiddleware(thunk)
+    // applyMiddleware(thunk)
+    applyMiddleware(sagaMiddleware)
 )
 
 const store = createStore(
@@ -13,6 +18,7 @@ const store = createStore(
     enhancer
 )
 
+sagaMiddleware.run(todoSaga)
 
 export default store
 

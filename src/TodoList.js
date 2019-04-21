@@ -1,16 +1,28 @@
+/*
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @LastEditors: Please set LastEditors
+ * @Date: 2019-04-21 02:21:47
+ * @LastEditTime: 2019-04-21 03:53:44
+ */
+
 import React, { Component } from 'react'
 
 import 'antd/dist/antd.css'
+
 
 import store from './store'
 import {
     getInputChangeAction,
     getAddItemAction,
     getDeleteItemAction,
-    getTodoList
+    // getInitListAction,
+    // getTodoList,
+    getInitList
 } from './store/actionCreators'
 
 import TodoListUI from './TodoListUi'
+// import axios from 'axios'
 
 class TodoList extends Component {
     constructor(props) {
@@ -28,7 +40,20 @@ class TodoList extends Component {
 
     componentDidMount() {
         // Redux-thunk中间件实现ajax数据请求
-        const action = getTodoList()
+        // const action = getTodoList()
+
+        // axios.get('/api/todolist')
+        //     .then((res) => {
+        //         const { data } = res.data
+        //         console.log(data)
+        //         const action = getInitListAction(data)
+        //         store.dispatch(action)
+        //     })
+        //     .catch(err => {
+        //         console.log(err)
+        //     })
+        const action = getInitList()
+        console.log(action)
         store.dispatch(action)
     }
 
